@@ -1,0 +1,25 @@
+# Datasets / Large files
+# archive/
+# *.csv
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Virtual environment (if you ever create one)
+venv/
+env/
+.env
+
+# MacOS folder clutter
+.DS_Store
+
+test.py
+Training.py
+Prac1.ipynb
+hand_landmarker.task
+Camera.py
+archive.zip
