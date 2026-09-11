@@ -2,7 +2,7 @@
 
 A beginner-friendly, educational mini-project implementing a Neural Network in Python. 
 
-We recently reformatted the project into a new notebook `copy.ipynb` divided into **three progressive categories** to help you build intuition from the absolute basics up to GPU-accelerated training using PyTorch.
+We recently reformatted the project into a new notebook `Network.ipynb` divided into **three progressive categories** to help you build intuition from the absolute basics up to GPU-accelerated training using PyTorch.
 
 ---
 
@@ -14,11 +14,14 @@ At the core of a neural network is a **Neuron**. It takes numerical inputs, appl
   <img src="https://victorzhou.com/a74a19dc0599aae11df7493c718abaf9/perceptron.svg" alt="A Single Neuron" />
 </div>
 
-Here is the step-by-step math for a single neuron with two inputs ($x_1$ and $x_2$):
-1. **Weights and Bias**: Each input is multiplied by a **weight** ($w_1$, $w_2$), and a **bias** ($b$) is added to the sum.
-   $$ z = (x_1 \times w_1) + (x_2 \times w_2) + b $$
-2. **Activation Function**: The result $z$ is then passed through an **activation function** to map the output to a predictable range (usually between 0 and 1). We use the **Sigmoid** function:
-   $$ f(z) = \frac{1}{1 + e^{-z}} $$
+Here is the step-by-step math for a single neuron with two inputs (x1 and x2):
+1. **Weights and Bias**: Each input is multiplied by a **weight** (w1, w2), and a **bias** (b) is added to the sum.
+   
+   > `z = (x1 * w1) + (x2 * w2) + b`
+
+2. **Activation Function**: The result `z` is then passed through an **activation function** to map the output to a predictable range (usually between 0 and 1). We use the **Sigmoid** function:
+   
+   > `f(z) = 1 / (1 + e^-z)`
 
 <div align="center">
   <img src="https://victorzhou.com/static/dd5a39500acbef371d8d791d2cd381e0/8c557/sigmoid.png" alt="Sigmoid Function" />
@@ -42,12 +45,15 @@ The process of passing data from the **Input Layer**, through the **Hidden Layer
   <img src="https://victorzhou.com/static/99e7886af56d6f41b484d17a52f9241b/3ebb1/loss.png" alt="Loss Function" />
 </div>
 
-We calculate the **Loss** to see how accurate our predictions are. We initially use **Mean Squared Error (MSE)**, which takes the difference between the true answer ($y_{true}$) and our prediction ($y_{pred}$), squares it, and averages it.
-$$ MSE = \frac{1}{n} \sum_{i=1}^n (y_{true} - y_{pred})^2 $$
+We calculate the **Loss** to see how accurate our predictions are. We initially use **Mean Squared Error (MSE)**, which takes the difference between the true answer (y_true) and our prediction (y_pred), squares it, and averages it.
+
+> `MSE = Average of (y_true - y_pred)^2`
 
 ### Learning: Backpropagation and Gradient Descent
 To minimize the loss, we calculate the **derivative** of the loss with respect to each weight and bias using the Chain Rule (Backpropagation). We then update our weights using **Gradient Descent**:
-$$ w = w - (\text{Learning Rate} \times \text{Derivative}) $$
+
+> `w = w - (Learning_Rate * Derivative)`
+
 By repeating this over many epochs, the network learns!
 
 ---
@@ -62,7 +68,9 @@ Instead of using Python `for` loops which process one sample at a time, PyTorch 
 ### Major Upgrades from Category 2:
 1. **Network Capacity**: We expanded the hidden layer from 2 neurons to **16 neurons** (`nn.Linear(2, 16)`). A larger dataset requires more parameters to capture complex patterns.
 2. **Binary Cross-Entropy (BCE) Loss**: We swapped out Mean Squared Error (MSE) for BCE. MSE suffers from the *vanishing gradient problem* when used with Sigmoid, which causes the network's loss to plateau (get stuck at a high number like 0.96). BCE provides strong gradients and is the mathematically correct loss function for binary classification (0 or 1 labels).
-   $$ \text{BCE} = -[y_{true} \times \log(y_{pred}) + (1 - y_{true}) \times \log(1 - y_{pred})] $$
+   
+   > `BCE = - [ y_true * log(y_pred) + (1 - y_true) * log(1 - y_pred) ]`
+
 3. **Accuracy Tracking**: Loss tells us how confident the network is, but **Accuracy** tells us how often it guesses correctly (e.g. 95% accuracy). We track this during inference.
 4. **Z-Score Normalization**: We scaled the input data by subtracting the mean and dividing by the standard deviation. Feeding massive, unscaled numbers directly into a Sigmoid activation causes the gradient to become mathematically zero, permanently freezing the network's learning (Vanishing Gradient).
 5. **Data Cleaning (Outlier Removal)**: We filtered out dirty, physically impossible data points (e.g. individuals listed as 3050 cm tall) before training. If left in, these outliers completely warp the Z-score normalization math and cripple the network's performance.
@@ -79,12 +87,12 @@ Instead of using Python `for` loops which process one sample at a time, PyTorch 
 To run the notebooks, install the required packages:
 
 ```bash
-pip install numpy pandas jupyter torch
+pip install -r requirements.txt
 ```
 
 ## Usage
 Open the notebook in your preferred environment:
 ```bash
-jupyter notebook copy.ipynb
+jupyter notebook Network.ipynb
 ```
 Follow along with the markdown cells and run the code sequentially!
